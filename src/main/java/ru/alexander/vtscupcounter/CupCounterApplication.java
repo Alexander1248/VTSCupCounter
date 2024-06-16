@@ -3,7 +3,6 @@ package ru.alexander.vtscupcounter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import javafx.application.Application;
-import javafx.collections.ObservableListBase;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -41,12 +40,24 @@ public class CupCounterApplication extends Application {
         stage.setTitle(pluginName);
         stage.setScene(scene);
         stage.show();
+        stage.setOnCloseRequest(windowEvent -> {
+            System.exit(0);
+        });
 
         AtomicReference<LoadCustomImagesAsItemsPermissionCall> call = new AtomicReference<>();
         call.set(new LoadCustomImagesAsItemsPermissionCall(new ResponseListener<>() {
             @Override
             public void onSuccess(PermissionResponse permissionResponse) {
-                System.out.println("Permission granted!");
+                if (permissionResponse.getStatus() == PermissionResponse.PermissionStatus.Granted) {
+                    System.out.println("Permission granted!");
+                }
+                else {
+                    System.out.println("Permission denied!");
+                    try {
+                        Thread.sleep(1000);
+                        System.exit(0);
+                    } catch (InterruptedException ignored) {}
+                }
             }
 
             @Override
@@ -65,22 +76,19 @@ public class CupCounterApplication extends Application {
             @Override
             public void onFailure(ErrorResponse errorResponse) {
                 System.err.println(errorResponse);
-                
                 try {
-                    CupCounterApplication.this.stop();
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
+                    Thread.sleep(1000);
+                    System.exit(0);
+                } catch (InterruptedException ignored) {}
             }
         };
         try {
             api = new VTubeStudioAPI();
         } catch(Exception e) {
             try {
-                CupCounterApplication.this.stop();
-            } catch (Exception ex) {
-                throw new RuntimeException(e);
-            }
+                Thread.sleep(1000);
+                System.exit(0);
+            } catch (InterruptedException ignored) {}
         }
         File tokenFile = new File("token");
         if (tokenFile.exists()) {
@@ -136,7 +144,11 @@ public class CupCounterApplication extends Application {
                     fos.close();
                 } catch (IOException e) {
                     System.err.println(e.getLocalizedMessage());
-                    stage.hide();
+
+                    try {
+                        Thread.sleep(1000);
+                        System.exit(0);
+                    } catch (InterruptedException ignored) {}
                 }
                 api.auth(
                         pluginName,
@@ -149,12 +161,11 @@ public class CupCounterApplication extends Application {
             @Override
             public void onFailure(ErrorResponse errorResponse) {
                 System.err.println(errorResponse);
-                
+
                 try {
-                    CupCounterApplication.this.stop();
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
+                    Thread.sleep(1000);
+                    System.exit(0);
+                } catch (InterruptedException ignored) {}
             }
         };
         api.requestToken(
