@@ -10,6 +10,7 @@ module ru.alexander.vtscupcounter {
     requires org.java_websocket;
     requires com.google.gson;
 
+
     opens ru.alexander.vtscupcounter to javafx.fxml;
     exports ru.alexander.vtscupcounter;
 }

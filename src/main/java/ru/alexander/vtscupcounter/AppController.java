@@ -2,12 +2,13 @@ package ru.alexander.vtscupcounter;
 
 import javafx.collections.ObservableListBase;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.ListView;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
+import javafx.scene.Node;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import ru.alexander.api.listeners.ResponseListener;
 import ru.alexander.api.responses.ErrorResponse;
@@ -74,27 +75,36 @@ public class AppController {
         file.forEach(f -> settings.files.add(f.getAbsolutePath()));
         filesList.clear();
         filesList.addAll(settings.files);
-        items.setItems(new ObservableListBase<>() {
-            @Override
-            public String get(int index) {
-                String name = new File(filesList.get(index)).getName();
-                return name.substring(0, name.lastIndexOf("."));
-            }
-
-            @Override
-            public int size() {
-                return filesList.size();
-            }
-        });
+        updateList();
 
         saveSettings();
     }
     public void onListMenuRequested(ContextMenuEvent contextMenuEvent) {
-
+        MenuItem delete = new MenuItem("Delete");
+        delete.setOnAction(actionEvent -> {
+            settings.files.remove(filesList.remove(items.getFocusModel().getFocusedIndex()));
+            saveSettings();
+            updateList();
+        });
+        ContextMenu menu = new ContextMenu(
+                delete
+        );
+        menu.show(
+                (Node) contextMenuEvent.getSource(),
+                contextMenuEvent.getScreenX(),
+                contextMenuEvent.getScreenY()
+        );
     }
 
     public void onListKeyPressed(KeyEvent keyEvent) {
-
+        if (keyEvent.getCode() == KeyCode.DELETE || keyEvent.getCode() == KeyCode.BACK_SPACE) {
+            int index = items.getFocusModel().getFocusedIndex();
+            if (index >= 0) {
+                settings.files.remove(filesList.remove(index));
+                saveSettings();
+                updateList();
+            }
+        }
     }
 
     @FXML
@@ -364,6 +374,21 @@ public class AppController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void updateList() {
+        items.setItems(new ObservableListBase<>() {
+            @Override
+            public String get(int index) {
+                String name = new File(filesList.get(index)).getName();
+                return name.substring(0, name.lastIndexOf("."));
+            }
+
+            @Override
+            public int size() {
+                return filesList.size();
+            }
+        });
     }
 
     private record Item(String id, float randomAngle, float width, float height) {

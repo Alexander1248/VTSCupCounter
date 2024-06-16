@@ -115,18 +115,7 @@ public class CupCounterApplication extends Application {
 
             controller.filesList.clear();
             controller.filesList.addAll(controller.settings.files);
-            controller.items.setItems(new ObservableListBase<>() {
-                @Override
-                public String get(int index) {
-                    String name = new File(controller.filesList.get(index)).getName();
-                    return name.substring(0, name.lastIndexOf("."));
-                }
-
-                @Override
-                public int size() {
-                    return controller.filesList.size();
-                }
-            });
+            controller.updateList();
         }
         else controller.settings = new Settings();
         controller.start();
