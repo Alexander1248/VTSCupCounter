@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<SplitPane dividerPositions="0.5" prefHeight="400.0" prefWidth="316.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.alexander.vtscupcounter.AppController">
+     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="76.0">
+         <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="398.0" prefWidth="119.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="0.0">
+             <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="208.0">
+                 <VBox layoutX="-4.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <Button mnemonicParsing="false" onAction="#onAddVariantClick" prefWidth="200.0" text="Add Variant" VBox.vgrow="ALWAYS" />
+                     <Label prefWidth="103.0" text="Randomness" textAlignment="CENTER" VBox.vgrow="ALWAYS" />
+                     <Slider fx:id="randomnessSlider" blockIncrement="1.0" max="30.0" onMouseReleased="#onRandomnessChanged" prefWidth="100.0" VBox.vgrow="ALWAYS" />
+                     <Label text="Size" VBox.vgrow="ALWAYS" />
+                     <Slider fx:id="sizeSlider" blockIncrement="0.1" max="1.0" onMouseReleased="#onSizeChanged" value="0.3" VBox.vgrow="ALWAYS" />
+                     <Label text="Order" VBox.vgrow="ALWAYS" />
+                     <TextField fx:id="orderField" onAction="#onOrderChange" VBox.vgrow="ALWAYS" />
+                     <GridPane prefWidth="109.0" VBox.vgrow="ALWAYS">
+                         <columnConstraints>
+                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                         </columnConstraints>
+                         <rowConstraints>
+                             <RowConstraints maxHeight="25.4" minHeight="10.0" prefHeight="24.0" vgrow="SOMETIMES" />
+                             <RowConstraints maxHeight="42.4" minHeight="10.0" prefHeight="21.6" vgrow="SOMETIMES" />
+                         </rowConstraints>
+                         <Label prefHeight="18.0" prefWidth="60.0" text="X" textAlignment="CENTER" />
+                         <Slider fx:id="anchorX" blockIncrement="0.1" max="1.0" min="-1.0" onMouseReleased="#onXChanged" GridPane.rowIndex="1" />
+                         <Label prefHeight="18.0" prefWidth="59.0" text="Y" textAlignment="CENTER" GridPane.columnIndex="1" />
+                         <Slider fx:id="anchorY" blockIncrement="0.1" max="1.0" min="-1.0" onMouseReleased="#onYChanged" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                     </GridPane>
+                     <Separator prefWidth="109.0" VBox.vgrow="ALWAYS">
+                  <VBox.margin>
+                     <Insets bottom="5.0" />
+                  </VBox.margin></Separator>
+                     <Label text="PixelScale" VBox.vgrow="ALWAYS" />
+                     <TextField fx:id="pixelScaleField" onAction="#onPixelScaleChanged" VBox.vgrow="ALWAYS" />
+               <Label prefWidth="143.0" text="MinCupStackSize" VBox.vgrow="ALWAYS" />
+               <TextField fx:id="minCupStackSizeField" onAction="#onMinCupStackSizeChanged" VBox.vgrow="ALWAYS" />
+               <Label text="MaxCupStackSize" />
+               <TextField fx:id="maxCupStackSizeField" onAction="#onMaxCupStackSizeChanged" />
+               <Label text="CupStackDistance" />
+               <TextField fx:id="cupStackDistance" onAction="#onDistanceChange" />
+                     <HBox VBox.vgrow="ALWAYS">
+                         <Button mnemonicParsing="false" onAction="#onIncrementClick" prefWidth="200.0" text="Increment" HBox.hgrow="ALWAYS" />
+                         <TextField fx:id="count" minWidth="30.0" onAction="#onChangeCount" text="0" />
+                         <Button mnemonicParsing="false" onAction="#onDecrementClick" prefWidth="200.0" text="Decrement" HBox.hgrow="ALWAYS" />
+                     </HBox>
+                 </VBox>
+             </AnchorPane>
+         </ScrollPane>
+     </AnchorPane>
+     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="398.0" prefWidth="13.0">
+           <ListView fx:id="items" onContextMenuRequested="#onListMenuRequested" onKeyPressed="#onListKeyPressed" prefHeight="1000.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+     </AnchorPane>
+ </SplitPane>
