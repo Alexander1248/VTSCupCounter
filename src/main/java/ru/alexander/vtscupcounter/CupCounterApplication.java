@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.collections.ObservableListBase;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import ru.alexander.api.VTubeStudioAPI;
@@ -31,10 +32,12 @@ public class CupCounterApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        Class<CupCounterApplication> cl = CupCounterApplication.class;
         Locale.setDefault(Locale.US);
         this.stage = stage;
-        FXMLLoader fxmlLoader = new FXMLLoader(CupCounterApplication.class.getResource("app-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(cl.getResource("app-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+        stage.getIcons().add(new Image(cl.getResourceAsStream("icon.png")));
         stage.setTitle(pluginName);
         stage.setScene(scene);
         stage.show();
@@ -157,7 +160,7 @@ public class CupCounterApplication extends Application {
         api.requestToken(
                 pluginName,
                 developer,
-                CupCounterApplication.class.getResourceAsStream("logo.png"),
+                CupCounterApplication.class.getResourceAsStream("icon.png"),
                 request
         );
     }

@@ -1,11 +1,11 @@
 {
   "maxAngle": 4.297994,
-  "x": 0.6506025,
+  "x": 0.7108436,
   "y": -0.6746987,
   "size": 0.29713467,
   "pixelScale": 5.5E-4,
   "order": 10,
-  "minCupStackSize": 3,
+  "minCupStackSize": 4,
   "maxCupStackSize": 7,
   "cupStackDistance": -0.1,
   "files": [
